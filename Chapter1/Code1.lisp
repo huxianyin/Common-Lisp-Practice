@@ -2,7 +2,7 @@
 
 ; 1.1
 (defun last-name (str) "extract last name"
-	(cdr str)
+
 	)
 
 
@@ -58,6 +58,57 @@
 )
 
 
+;1.4
+(defun count-anywhere (item lst) "count how many items in the list"
+	(cond
+		((null lst) 0)
+		((atom lst) (if (equal item lst) 1 0))
+		(t (+ (count-anywhere item (car lst)) (count-anywhere item (cdr lst))))
+	)
+)
+
+
+;1.4解答
+(defun count-anywhere (item tree) "count the times item appears anywhere within the tree"
+	(cond
+		((eql item tree) 1)
+		((atom tree) 0)
+		(t (+ (count-anywhere item (car tree)) (count-anywhere item (cdr tree))))
+	)
+)
+
+;1.5
+(defun dot-product (vec1 vec2) "dot product of two vectors"
+	(cond 
+		((null vec1) 0)
+		((atom vec1) (* vec1 vec2))
+		(t (+ (dot-product (car vec1) (car vec2)) (dot-product (cdr vec1) (cdr vec2))))
+		)
+	)
+
+
+
+;1.5解答 using recurrent
+(defun dot-product (vec1 vec2) "dot product of two vectors using recurrent"
+	(if (or (null vec1) (null vec2)) 0
+		(+ (* (car vec1) (car vec2)) (dot-product (cdr vec1) (cdr vec2)))
+	)
+)
+
+;1.5解答 using iterration
+(defun dot-product (vec1 vec2) "dot product of two vectors using iterration"
+	(let ((res 0))
+		(dotimes (i (length vec1))
+			(incf res (* (elt vec1 i) (elt vec2 i)))
+		)
+		res
+	)
+)
+
+;1.5解答 using marcar
+(defun  dot-product (vec1 vec2) "dot product of two vectors using marcar"
+	(apply #'+ (mapcar #'* vec1 vec2))
+)
 
 
 
